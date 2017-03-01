@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
+	sourcemaps = require('gulp-sourcemaps');
 	uglify = require('gulp-uglify'),
 	browserify = require('browserify'),
 	source = require('vinyl-source-stream'),
@@ -14,7 +15,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('html', function(){
-	gulp.src("app/*html")
+	gulp.src("app/**/*html")
 	.pipe(gulp.dest("dist/"))
 });
 
@@ -26,6 +27,8 @@ gulp.task('js',function(){
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(uglify())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./dist/js/'));
 
 });
@@ -44,9 +47,9 @@ gulp.task('serve', ['sass','js','html','assets'], function() {
 
     gulp.watch("app/sass/*.scss", ['sass']);
     gulp.watch("app/js/*.js", ['js']);
-    gulp.watch("app/*.html", ['html']);
+    gulp.watch("app/**/*.html", ['html']);
     gulp.watch("app/img/*", ['assets']);
-    gulp.watch(["app/*/*", "app/*"]).on('change', browserSync.reload);
+    gulp.watch(["dist/**/*"]).on('change', browserSync.reload);
 });
 
 gulp.task('default',['sass','html','assets','js','serve']);
