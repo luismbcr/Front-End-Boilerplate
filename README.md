@@ -1,8 +1,11 @@
-# front-end-generator
-Front-end generator based in Gulp that uses Bootstrap,Browserify and Sass.
 
-After clone the repository:
+## Front End - Boilerplate ##
+
+Gulp Boilerplate to create web applications that uses Bootstrap,Browserify and Sass.
+
+**Installation**
+Run next script:
  > NPM install
  
-For build and  serve enter:
+To build and  serve, run next script:
  > Gulp
