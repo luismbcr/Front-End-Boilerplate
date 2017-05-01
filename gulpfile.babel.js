@@ -12,9 +12,12 @@ import browserSync from 'browser-sync';
 import imagemin   from 'gulp-imagemin';
 
 gulp.task('sass', ()=>{
-  return gulp.src('./app/sass/**/*.scss') //indicar rutas
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) //minificar
-    .pipe(gulp.dest('./dist/css')); // destino del file
+  return gulp.src('./app/sass/**/*.scss') 
+        .pipe(sourcemaps.init())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) 
+        .pipe(autoprefixer())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('./dist/css')); 
 });
 
 gulp.task('html',()=>{
