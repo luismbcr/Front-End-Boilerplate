@@ -1,25 +1,28 @@
-var gulp = require('gulp'),
-	sass = require('gulp-sass'),
-	sourcemaps = require('gulp-sourcemaps');
-	uglify = require('gulp-uglify'),
-	browserify = require('browserify'),
-	source = require('vinyl-source-stream'),
-	buffer = require('vinyl-buffer'),
-	browserSync = require('browser-sync').create(),
-	imagemin   = require('gulp-imagemin');
+'use strict';
 
-gulp.task('sass', function () {
+import gulp from 'gulp';
+import sass from 'gulp-sass';
+import autoprefixer from 'gulp-autoprefixer';
+import sourcemaps from 'gulp-sourcemaps';
+import uglify from 'gulp-uglify';
+import browserify from 'browserify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
+import browserSync from 'browser-sync';
+import imagemin   from 'gulp-imagemin';
+
+gulp.task('sass', ()=>{
   return gulp.src('./app/sass/**/*.scss') //indicar rutas
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) //minificar
     .pipe(gulp.dest('./dist/css')); // destino del file
 });
 
-gulp.task('html', function(){
+gulp.task('html',()=>{
 	gulp.src("app/**/*html")
 	.pipe(gulp.dest("dist/"))
 });
 
-gulp.task('js',function(){
+gulp.task('js',()=>{
 	return browserify({
 		entries: './app/js/app.js'
 	})
@@ -33,13 +36,13 @@ gulp.task('js',function(){
 
 });
 
-gulp.task('assets', function(){
+gulp.task('assets',()=>{
 	gulp.src("app/img/*")
 	.pipe(imagemin())
 	.pipe(gulp.dest("dist/img/"))
 });
 
-gulp.task('serve', ['sass','js','html','assets'], function() {
+gulp.task('serve', ['sass','js','html','assets'], ()=>{
 
     browserSync.init({
         server: "./dist"
