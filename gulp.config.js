@@ -4,7 +4,7 @@ module.exports = () => {
       this.src = './app/'
       this.dest = './dist/'
     }
-    }
+  }
   const config = new Config()
   return config
 }

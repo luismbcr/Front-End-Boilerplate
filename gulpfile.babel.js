@@ -12,9 +12,10 @@ import browserSync from 'browser-sync'
 import imagemin from 'gulp-imagemin'
 import gutil from 'gulp-util'
 import eslint from 'gulp-eslint'
+import sasslint from 'gulp-sass-lint'
 const config = require('./gulp.config')()
 
-gulp.task('sass', () => {
+gulp.task('sass', ['sass-lint'], () => {
   return gulp.src(`${config.src}sass/**/*.scss`)
     .pipe(sourcemaps.init())
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
@@ -23,6 +24,20 @@ gulp.task('sass', () => {
     .on('error', gutil.log)
     .pipe(gulp.dest(`${config.dest}/css`))
     .pipe(browserSync.reload({ stream: true }))
+})
+
+gulp.task('sass-lint', function () {
+  return gulp.src([
+    `${config.src}sass/**/*.scss`
+  ])
+    .pipe(sasslint({
+      options: {
+        formatter: 'stylish'
+      }
+    }))
+    .pipe(sasslint.format())
+    .pipe(sasslint.failOnError())
+    .on('error', gutil.log)
 })
 
 gulp.task('html', () => {
