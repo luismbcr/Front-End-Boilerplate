@@ -16,7 +16,9 @@ import sasslint from 'gulp-sass-lint'
 const config = require('./gulp.config')()
 
 gulp.task('sass', ['sass-lint'], () => {
-  return gulp.src(`${config.src}sass/**/*.scss`)
+  return gulp.src([
+    `${config.node_modules}bootstrap/scss/bootstrap.scss`,
+    `${config.src}sass/**/*.scss`])
     .pipe(sourcemaps.init())
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(autoprefixer())
@@ -28,12 +30,14 @@ gulp.task('sass', ['sass-lint'], () => {
 
 gulp.task('sass-lint', function () {
   return gulp.src([
+    `${config.node_modules}bootstrap/scss/bootstrap.scss`,
     `${config.src}sass/**/*.scss`
   ])
     .pipe(sasslint({
       options: {
         formatter: 'stylish'
-      }
+      },
+      files: { ignore: `${config.node_modules}**/*.scss` }
     }))
     .pipe(sasslint.format())
     .pipe(sasslint.failOnError())
