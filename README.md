@@ -5,7 +5,10 @@ Gulp Boilerplate to create web applications that uses Bootstrap,Browserify and S
 
 **Installation**
 Run next script:
- > NPM install
+ > npm
  
-To build and  serve, run next script:
- > Gulp
+To serve, run next:
+ > npm start
+
+To Build run next:
+ > npm build
